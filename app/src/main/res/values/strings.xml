@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Mojo</string>
+
+    <string name="themoviedb_key" translatable="false">9126e9ca00a9e4d83499a4c883a5e216</string>
+    <string name="action_settings">Settings</string>
+    <string name="pref_sort_label">Sort by</string>
+    <string name="pref_sort_key" translatable="false">sort</string>
+    <string name="pref_sort_label_popularity">Popularity</string>
+    <string name="pref_sort_label_rating">Top Rated</string>
+    <string name="pref_sort_popularity" translatable="false">popularity</string>
+    <string name="pref_sort_rating" translatable="false">top_rated</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_details">Details</string>
+</resources>
