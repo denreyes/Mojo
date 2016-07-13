@@ -1,10 +1,10 @@
-package io.djnr.mojo.movies.presenter;
+package io.djnr.mojo.ui.movies.presenter;
 
 import android.content.Context;
 
 import java.lang.ref.WeakReference;
 
-import io.djnr.mojo.movies.IMovies;
+import io.djnr.mojo.ui.movies.IMovies;
 
 /**
  * Created by Dj on 7/13/2016.

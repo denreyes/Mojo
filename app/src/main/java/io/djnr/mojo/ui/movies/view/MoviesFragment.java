@@ -1,4 +1,4 @@
-package io.djnr.mojo.movies.view;
+package io.djnr.mojo.ui.movies.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,10 +21,10 @@ import butterknife.ButterKnife;
 import io.djnr.mojo.R;
 import io.djnr.mojo.model.Movies;
 import io.djnr.mojo.model.Result;
-import io.djnr.mojo.movies.IMovies;
-import io.djnr.mojo.movies.model.MoviesModel;
-import io.djnr.mojo.movies.presenter.MoviesPresenter;
-import io.djnr.mojo.movies.view.adapter.MoviesAdapter;
+import io.djnr.mojo.ui.movies.IMovies;
+import io.djnr.mojo.ui.movies.model.MoviesModel;
+import io.djnr.mojo.ui.movies.presenter.MoviesPresenter;
+import io.djnr.mojo.ui.movies.view.adapter.MoviesAdapter;
 import io.djnr.mojo.remote.MoviesAPI;
 import io.djnr.mojo.settings.SettingsActivity;
 import retrofit2.Call;

@@ -1,4 +1,4 @@
-package io.djnr.mojo.movies;
+package io.djnr.mojo.ui.movies;
 
 import android.content.Context;
 
