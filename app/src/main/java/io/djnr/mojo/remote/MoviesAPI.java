@@ -10,7 +10,6 @@ import retrofit2.http.GET;
  * Created by Dj on 7/7/2016.
  */
 public interface MoviesAPI {
-
     public static final String BASE_URL = "http://api.themoviedb.org/3/movie/";
 //    Add MovieDB api key below
     public static final String API_KEY = "";

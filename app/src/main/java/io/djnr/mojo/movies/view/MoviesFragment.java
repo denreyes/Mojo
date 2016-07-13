@@ -1,5 +1,6 @@
-package io.djnr.mojo.ui.movies;
+package io.djnr.mojo.movies.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,6 +21,10 @@ import butterknife.ButterKnife;
 import io.djnr.mojo.R;
 import io.djnr.mojo.model.Movies;
 import io.djnr.mojo.model.Result;
+import io.djnr.mojo.movies.IMovies;
+import io.djnr.mojo.movies.model.MoviesModel;
+import io.djnr.mojo.movies.presenter.MoviesPresenter;
+import io.djnr.mojo.movies.view.adapter.MoviesAdapter;
 import io.djnr.mojo.remote.MoviesAPI;
 import io.djnr.mojo.settings.SettingsActivity;
 import retrofit2.Call;
@@ -29,15 +34,34 @@ import retrofit2.Response;
 /**
  * Created by Dj on 7/6/2016.
  */
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends Fragment implements IMovies.RequiredView{
     private static final String TAG = "MoviesFragment";
     @BindView(R.id.grid_movies)
     GridView mGridMovies;
+
+    IMovies.ProvidedPresenter mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_movies, container, false);
+        ButterKnife.bind(this, view);
+
+        String sort_order =
+                PreferenceManager.getDefaultSharedPreferences(getActivity())
+                        .getString(getString(R.string.pref_sort_key),
+                                getString(R.string.pref_sort_popularity));
+
+        fetchMovies(sort_order);
+
+        setup();
+        return view;
     }
 
     @Override
@@ -56,19 +80,11 @@ public class MoviesFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movies, container, false);
-        ButterKnife.bind(this, view);
-
-        String sort_order =
-                PreferenceManager.getDefaultSharedPreferences(getActivity())
-                        .getString(getString(R.string.pref_sort_key),
-                                getString(R.string.pref_sort_popularity));
-
-        fetchMovies(sort_order);
-        return view;
+    private void setup(){
+        MoviesPresenter presenter = new MoviesPresenter(this);
+        MoviesModel model = new MoviesModel(presenter);
+        presenter.setModel(model);
+        this.mPresenter = presenter;
     }
 
     private void fetchMovies(String sort_order) {
@@ -101,4 +117,13 @@ public class MoviesFragment extends Fragment {
         }
     }
 
+    @Override
+    public Context getAppContext() {
+        return getAppContext();
+    }
+
+    @Override
+    public Context getActivityContext() {
+        return getActivity();
+    }
 }

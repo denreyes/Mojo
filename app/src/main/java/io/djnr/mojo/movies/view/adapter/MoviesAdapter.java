@@ -1,4 +1,4 @@
-package io.djnr.mojo.ui.movies;
+package io.djnr.mojo.movies.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
