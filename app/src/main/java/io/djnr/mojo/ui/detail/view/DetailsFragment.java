@@ -1,5 +1,6 @@
-package io.djnr.mojo.ui.detail;
+package io.djnr.mojo.ui.detail.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,11 +16,14 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.djnr.mojo.R;
+import io.djnr.mojo.ui.detail.IDetails;
+import io.djnr.mojo.ui.detail.model.DetailsModel;
+import io.djnr.mojo.ui.detail.presenter.DetailsPresenter;
 
 /**
  * Created by Dj on 7/8/2016.
  */
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends Fragment implements IDetails.RequiredView{
     @BindView(R.id.img_poster)
     ImageView mImagePoster;
     @BindView(R.id.text_title)
@@ -31,23 +35,45 @@ public class DetailsFragment extends Fragment {
     @BindView(R.id.text_content)
     TextView mTextContent;
 
+    IDetails.ProvidedPresenter mPresenter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         ButterKnife.bind(this, view);
-        Intent i = getActivity().getIntent();
-        mTextTitle.setText(i.getStringExtra("MOVIE_TITLE"));
-        mTextYear.setText("(" + i.getStringExtra("MOVIE_RELEASE_DATE").substring(0, 4) + ")");
-        mTextRating.setText(i.getDoubleExtra("MOVE_RATE",0)+"/10");
-        mTextContent.setText(i.getStringExtra("MOVE_PLOT"));
+        setup();
+        return view;
+    }
+
+    private void setup() {
+        DetailsPresenter presenter = new DetailsPresenter(this);
+        DetailsModel model = new DetailsModel(presenter);
+        presenter.setModel(model);
+        this.mPresenter = presenter;
+    }
+
+    @Override
+    public Context getAppContext() {
+        return getActivity().getApplicationContext();
+    }
+
+    @Override
+    public Context getActivityContext() {
+        return getActivity();
+    }
+
+    @Override
+    public void setViews(String title, String year, String rate, String summary, String poster_url) {
+        mTextTitle.setText(title);
+        mTextYear.setText(year);
+        mTextRating.setText(rate);
+        mTextContent.setText(summary);
 
         Glide.with(this)
-                .load(i.getStringExtra("MOVIE_POSTER_URL"))
+                .load(poster_url)
                 .fitCenter()
                 .crossFade()
                 .into(mImagePoster);
-
-        return view;
     }
 }

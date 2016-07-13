@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import io.djnr.mojo.R;
+import io.djnr.mojo.ui.detail.view.DetailsFragment;
 
 /**
  * Created by Dj on 7/8/2016.
