@@ -1,10 +1,10 @@
-package io.djnr.mojo.ui.movies;
+package io.djnr.mojo.movies;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import io.djnr.mojo.R;
-import io.djnr.mojo.ui.movies.MoviesFragment;
+import io.djnr.mojo.movies.view.MoviesFragment;
 
 public class MoviesActivity extends AppCompatActivity{
 
