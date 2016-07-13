@@ -26,8 +26,6 @@ public class DetailsFragment extends Fragment {
     TextView mTextTitle;
     @BindView(R.id.text_year)
     TextView mTextYear;
-    @BindView(R.id.text_duration)
-    TextView mTextDuration;
     @BindView(R.id.text_rating)
     TextView mTextRating;
     @BindView(R.id.text_content)

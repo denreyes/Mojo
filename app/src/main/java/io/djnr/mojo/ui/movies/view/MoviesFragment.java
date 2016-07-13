@@ -52,14 +52,6 @@ public class MoviesFragment extends Fragment implements IMovies.RequiredView{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
         ButterKnife.bind(this, view);
-
-        String sort_order =
-                PreferenceManager.getDefaultSharedPreferences(getActivity())
-                        .getString(getString(R.string.pref_sort_key),
-                                getString(R.string.pref_sort_popularity));
-
-        fetchMovies(sort_order);
-
         setup();
         return view;
     }
@@ -87,36 +79,6 @@ public class MoviesFragment extends Fragment implements IMovies.RequiredView{
         this.mPresenter = presenter;
     }
 
-    private void fetchMovies(String sort_order) {
-        if (sort_order.equals(getString(R.string.pref_sort_popularity))) {
-            MoviesAPI.Factory.getInstance().popularMovies().enqueue(new Callback<Movies>() {
-                @Override
-                public void onResponse(Call<Movies> call, Response<Movies> response) {
-                    List<Result> results = response.body().getResults();
-                    mGridMovies.setAdapter(new MoviesAdapter(getActivity(), results));
-                }
-
-                @Override
-                public void onFailure(Call<Movies> call, Throwable t) {
-
-                }
-            });
-        } else {
-            MoviesAPI.Factory.getInstance().topRatedMovies().enqueue(new Callback<Movies>() {
-                @Override
-                public void onResponse(Call<Movies> call, Response<Movies> response) {
-                    List<Result> results = response.body().getResults();
-                    mGridMovies.setAdapter(new MoviesAdapter(getActivity(), results));
-                }
-
-                @Override
-                public void onFailure(Call<Movies> call, Throwable t) {
-
-                }
-            });
-        }
-    }
-
     @Override
     public Context getAppContext() {
         return getAppContext();
@@ -125,5 +87,10 @@ public class MoviesFragment extends Fragment implements IMovies.RequiredView{
     @Override
     public Context getActivityContext() {
         return getActivity();
+    }
+
+    @Override
+    public void displayMovies(List<Result> results) {
+        mGridMovies.setAdapter(new MoviesAdapter(getActivity(), results));
     }
 }
