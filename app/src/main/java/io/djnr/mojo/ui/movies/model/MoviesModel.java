@@ -1,6 +1,6 @@
-package io.djnr.mojo.movies.model;
+package io.djnr.mojo.ui.movies.model;
 
-import io.djnr.mojo.movies.IMovies;
+import io.djnr.mojo.ui.movies.IMovies;
 
 /**
  * Created by Dj on 7/13/2016.

@@ -1,4 +1,4 @@
-package io.djnr.mojo.movies.view.adapter;
+package io.djnr.mojo.ui.movies.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
