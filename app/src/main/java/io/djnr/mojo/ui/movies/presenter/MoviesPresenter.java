@@ -41,6 +41,11 @@ public class MoviesPresenter implements IMovies.ProvidedPresenter, IMovies.Requi
     }
 
     @Override
+    public void setView(IMovies.RequiredView view) {
+        this.mView = new WeakReference<IMovies.RequiredView>(view);;
+    }
+
+    @Override
     public Context getAppContext() {
         return getView().getAppContext();
     }
