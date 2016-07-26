@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import io.djnr.mojo.dagger.module.AppModule;
+import io.djnr.mojo.dagger.module.DetailsFragmentModule;
 import io.djnr.mojo.dagger.module.MoviesFragmentModule;
 
 /**
@@ -16,4 +17,5 @@ import io.djnr.mojo.dagger.module.MoviesFragmentModule;
 public interface AppComponent {
     Application application();
     MoviesFragmentComponent getMoviesComponent(MoviesFragmentModule module);
+    DetailsFragmentComponent getDetailsComponent(DetailsFragmentModule module);
 }
