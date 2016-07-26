@@ -3,7 +3,6 @@ package io.djnr.mojo.ui.movies.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,20 +15,17 @@ import android.widget.GridView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.djnr.mojo.MoviesApp;
 import io.djnr.mojo.R;
-import io.djnr.mojo.model.Movies;
+import io.djnr.mojo.dagger.module.MoviesFragmentModule;
 import io.djnr.mojo.model.Result;
 import io.djnr.mojo.ui.movies.IMovies;
-import io.djnr.mojo.ui.movies.model.MoviesModel;
-import io.djnr.mojo.ui.movies.presenter.MoviesPresenter;
 import io.djnr.mojo.ui.movies.view.adapter.MoviesAdapter;
-import io.djnr.mojo.remote.MoviesAPI;
 import io.djnr.mojo.settings.SettingsActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Dj on 7/6/2016.
@@ -39,7 +35,8 @@ public class MoviesFragment extends Fragment implements IMovies.RequiredView{
     @BindView(R.id.grid_movies)
     GridView mGridMovies;
 
-    IMovies.ProvidedPresenter mPresenter;
+    @Inject
+    public IMovies.ProvidedPresenter mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +49,7 @@ public class MoviesFragment extends Fragment implements IMovies.RequiredView{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
         ButterKnife.bind(this, view);
-        setup();
+        setupComponent();
         return view;
     }
 
@@ -72,11 +69,11 @@ public class MoviesFragment extends Fragment implements IMovies.RequiredView{
         return super.onOptionsItemSelected(item);
     }
 
-    private void setup(){
-        MoviesPresenter presenter = new MoviesPresenter(this);
-        MoviesModel model = new MoviesModel(presenter);
-        presenter.setModel(model);
-        this.mPresenter = presenter;
+    private void setupComponent() {
+        MoviesApp.get(getActivity())
+                .getAppComponent()
+                .getMoviesComponent(new MoviesFragmentModule(this))
+                .inject(this);
     }
 
     @Override
