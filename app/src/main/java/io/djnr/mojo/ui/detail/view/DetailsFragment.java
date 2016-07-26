@@ -13,9 +13,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.djnr.mojo.MoviesApp;
 import io.djnr.mojo.R;
+import io.djnr.mojo.dagger.module.DetailsFragmentModule;
 import io.djnr.mojo.ui.detail.IDetails;
 import io.djnr.mojo.ui.detail.model.DetailsModel;
 import io.djnr.mojo.ui.detail.presenter.DetailsPresenter;
@@ -35,6 +39,7 @@ public class DetailsFragment extends Fragment implements IDetails.RequiredView{
     @BindView(R.id.text_content)
     TextView mTextContent;
 
+    @Inject
     IDetails.ProvidedPresenter mPresenter;
 
     @Nullable
@@ -42,15 +47,15 @@ public class DetailsFragment extends Fragment implements IDetails.RequiredView{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         ButterKnife.bind(this, view);
-        setup();
+        setupComponent();
         return view;
     }
 
-    private void setup() {
-        DetailsPresenter presenter = new DetailsPresenter(this);
-        DetailsModel model = new DetailsModel(presenter);
-        presenter.setModel(model);
-        this.mPresenter = presenter;
+    private void setupComponent(){
+        MoviesApp.get(getActivity())
+                .getAppComponent()
+                .getDetailsComponent(new DetailsFragmentModule(this))
+                .inject(this);
     }
 
     @Override
